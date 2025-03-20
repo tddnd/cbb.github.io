@@ -23,6 +23,7 @@
             "outputPath": {
               "base": "dist/angular-tailwind"
             },
+            "baseHref": "/cbb.github.io/",
             "index": "src/index.html",
             "polyfills": [
               "src/polyfills.ts"
