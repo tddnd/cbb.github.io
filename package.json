@@ -28,7 +28,9 @@
     "prettier": "prettier --config ./.prettierrc --write \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",
     "prettier:verify": "prettier --config ./.prettierrc --check \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",
     "prettier:staged": "pretty-quick --staged",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "git-build": "ng build --configuration=production --output-path=dist/angular-tailwind --base-href=\"/cbb.github.io/\"",
+    "git-deploy": "npx angular-cli-ghpages --dir=dist/angular-tailwind/browser"
   },
   "private": true,
   "dependencies": {
