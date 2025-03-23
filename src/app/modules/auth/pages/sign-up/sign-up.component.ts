@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -13,12 +13,12 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
   imports: [FormsModule, RouterLink, AngularSvgIconModule, ButtonComponent, NgFor],
 })
 export class SignUpComponent implements OnInit {
-  public genderValue: string = ''
-  public levelValue: string = ''
-  public typeSignUpValue: number = 0
-  public typeSignUpStringPlayer = 'light'
-  public typeSignUpStringOrg = 'light'
-  public levelsArray = [
+  genderValue: string = ''
+  levelValue: string = ''
+  typeSignUpValue = 0
+  typeSignUpStringPlayer = 'light'
+  typeSignUpStringOrg = 'light'
+  levelsArray = [
     { id: 1, value: 'h', label: 'H' },
     { id: 2, value: 'g', label: 'G' },
     { id: 3, value: 'f', label: 'F' },
@@ -28,7 +28,10 @@ export class SignUpComponent implements OnInit {
     { id: 7, value: 'b', label: 'B' },
     { id: 8, value: 'a', label: 'A' },
   ]
-  constructor(public filterService: TableFilterService) { }
+  constructor(
+    public filterService: TableFilterService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void { }
 
@@ -46,5 +49,6 @@ export class SignUpComponent implements OnInit {
 
   onTypeSignUpChange(value: number) {
     this.typeSignUpValue = value
+    this.cdr.detectChanges()
   }
 }

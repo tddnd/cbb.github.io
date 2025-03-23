@@ -1,6 +1,6 @@
 <form class="my-10 space-y-6">
   <div class="text-center">
-    <h2 class="text-foreground mb-1 text-3xl font-semibold">Đăng ký <span class="text-primary">!</span></h2>
+    <h2 class="text-foreground mb-1 text-3xl font-semibold">Đăng ký<span class="text-primary">!</span></h2>
     <!-- <p class="text-white text-sm">Let's get started with your 30 day free trial</p> -->
   </div>
 
@@ -16,9 +16,11 @@
   </div> -->
 
   <div class="grid grid-cols-2 gap-2">
-    <app-button full impact="bold" tone="light" shape="rounded" size="medium" (buttonClick)="onTypeSignUpChange(0)">Cơ
+    <app-button full impact="bold" [tone]="typeSignUpValue === 0 ? 'primary' :'light'" shape="rounded" size="medium"
+      (buttonClick)="onTypeSignUpChange(0)">Cơ
       thủ</app-button>
-    <app-button full impact="bold" tone="light" shape="rounded" size="medium" (buttonClick)="onTypeSignUpChange(1)">Đơn
+    <app-button full impact="bold" [tone]="typeSignUpValue === 1 ? 'primary' :'light'" shape="rounded" size="medium"
+      (buttonClick)="onTypeSignUpChange(1)">Đơn
       vị tổ chức</app-button>
   </div>
 

@@ -1,11 +1,9 @@
 <div class="bg-background relative">
   <div class="mx-auto px-5">
-    <div class="flex items-center justify-between py-3.5 md:justify-start">
+    <div class="flex items-center justify-between py-3.5">
       <!-- Mobile Navigation Menu Button-->
       <div class="sm:order-1 md:hidden">
-        <button
-          (click)="toggleMobileMenu()"
-          type="button"
+        <button (click)="toggleMobileMenu()" type="button"
           class="bg-muted text-muted-foreground focus:ring-primary hover:bg-muted-foreground hover:text-muted inline-flex items-center justify-center rounded-md p-2 focus:outline-hidden focus:ring-2 focus:ring-inset"
           aria-expanded="false">
           <span class="sr-only">Open menu</span>
@@ -15,7 +13,7 @@
       </div>
 
       <!-- Logo -->
-      <div class="flex items-center justify-start gap-3 sm:order-2 ltr:md:mr-10 rtl:md:ml-10 lg:hidden">
+      <div class="sm:order-2 flex items-center justify-start gap-3 ltr:md:mr-10 rtl:md:ml-10">
         <a class="bg-primary flex items-center justify-center rounded-sm p-2 focus:outline-hidden focus:ring-1">
           <svg-icon src="assets/icons/logo.svg"></svg-icon>
         </a>
@@ -23,12 +21,12 @@
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden space-x-10 sm:order-3 md:flex">
+      <div class="sm:order-3 hidden md:flex space-x-10">
         <app-navbar-menu></app-navbar-menu>
       </div>
 
       <!-- Profile menu -->
-      <div class="items-center justify-end sm:order-4 md:flex md:flex-1 lg:w-0">
+      <div class="items-center justify-end sm:order-4">
         <app-profile-menu></app-profile-menu>
       </div>
     </div>

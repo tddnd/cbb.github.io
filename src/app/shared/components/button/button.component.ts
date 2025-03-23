@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
+import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges, input } from '@angular/core';
 import { cx } from '../../utils/ckassnames';
 
 type ButtonProps = {
@@ -17,7 +17,7 @@ type ButtonProps = {
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements OnInit, OnChanges {
   impact = input<ButtonProps['impact']>('none');
   size = input<ButtonProps['size']>('medium');
   shape = input<ButtonProps['shape']>('rounded');
@@ -93,6 +93,14 @@ export class ButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.handelRenderClass()
+  }
+
+  onButtonClick() {
+    this.buttonClick.emit();
+  }
+
+  handelRenderClass() {
     this.classes = cx(
       this.baseClasses,
       this.impactClasses[this.tone()][this.impact()],
@@ -103,7 +111,9 @@ export class ButtonComponent implements OnInit {
     );
   }
 
-  onButtonClick() {
-    this.buttonClick.emit();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tone']) {
+      this.handelRenderClass()
+    }
   }
 }

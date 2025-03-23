@@ -20,16 +20,16 @@
   <div class="space-y-3 text-left">
     <div class="form__group">
       <div class="relative">
-        <input type="text" id="email" [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
-          class="peer block" placeholder=" " formControlName="email" />
-        <label for="email" [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['email'].errors }"
+        <input type="text" id="username" [ngClass]="{ 'is__invalid-input': submitted && f['username'].errors }"
+          class="peer block" placeholder=" " formControlName="username" />
+        <label for="username" [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['username'].errors }"
           class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
           Email hoặc SĐT
         </label>
       </div>
-      <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-        <div *ngIf="f['email'].errors['required']">Required field</div>
-        <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
+      <div *ngIf="submitted && f['username'].errors" class="is__invalid-error">
+        <div *ngIf="f['username'].errors['required']">Không được để trống</div>
+        <div *ngIf="f['username'].errors['email']">Email sai định dạng</div>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
         </span>
       </div>
       <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
-        <div *ngIf="f['password'].errors['required']">Required field</div>
+        <div *ngIf="f['password'].errors['required']">Không được để trống</div>
       </div>
     </div>
   </div>
@@ -64,20 +64,26 @@
       <label for="remember-me" class="text-muted-foreground ml-2 block text-sm"> Lưu tài khoản </label>
     </div>
 
-    <app-button routerLink="/auth/forgot-password" impact="none" tone="primary" shape="rounded" size="small">
+    <app-button routerLink="/auth/forgot-password" impact="none" tone="primary" shape="rounded" size="small"
+      [disabled]="false">
       Quên mật khẩu
     </app-button>
   </div>
 
   <!-- Submit Button -->
   <div>
-    <app-button full impact="bold" tone="primary" shape="rounded" size="medium">Đăng nhập</app-button>
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium" [disabled]="false">
+      Đăng nhập
+      <span class="animate-spin ml-1">
+        <svg-icon src="assets/icons/heroicons/outline/loading.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
+      </span>
+    </app-button>
   </div>
 
   <!-- Sign-up -->
   <div class="text-muted-foreground flex items-center text-sm">
     Chưa phải là thành viên?
-    <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small">
+    <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small" [disabled]="false">
       Đăng ký
     </app-button>
   </div>

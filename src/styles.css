@@ -145,13 +145,13 @@
 @utility dropdown-content {
   @apply pointer-events-none scale-95 opacity-0 duration-100 ease-in;
 
-  .dropdown:hover>& {
+  .dropdown:hover > & {
     @apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
   }
 }
 
 @utility dropdown {
-  &:hover>.dropdown-content {
+  &:hover > .dropdown-content {
     @apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
   }
 }
@@ -290,4 +290,8 @@ select {
 [type='checkbox'],
 [type='radio'] {
   @apply h-4 w-4 rounded-sm border-border bg-background checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus:ring-2 focus:ring-primary;
+}
+
+button {
+  cursor: pointer;
 }
