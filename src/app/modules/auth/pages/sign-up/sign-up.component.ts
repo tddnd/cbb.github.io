@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -30,7 +30,6 @@ export class SignUpComponent implements OnInit {
   ]
   constructor(
     public filterService: TableFilterService,
-    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void { }
@@ -49,6 +48,5 @@ export class SignUpComponent implements OnInit {
 
   onTypeSignUpChange(value: number) {
     this.typeSignUpValue = value
-    this.cdr.detectChanges()
   }
 }

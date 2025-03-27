@@ -1,16 +1,34 @@
 <div class="flex">
   <div class="dropdown relative inline-block" *ngFor="let menu of menuService.pagesMenu">
-    <!-- Button -->
-    <button [ngClass]="
+
+    <ng-container [ngTemplateOutlet]="menu.items.length === 0 ? linkMenu : subMenu"
+      [ngTemplateOutletContext]="{ item: menu }">
+    </ng-container>
+
+    <ng-template #subMenu let-item="item">
+      <!-- Button -->
+      <button [ngClass]="
       menu.selected || menu.active
         ? 'bg-primary text-primary-foreground'
         : 'text-muted-foreground/50 hover:bg-card hover:text-muted-foreground '
     " class="mr-2 inline-flex rounded-md px-3 py-2 text-sm font-medium cursor-pointer">
-      <span>{{ menu.group }}</span>
-    </button>
-    <!-- Dropdown  -->
-    <div class="dropdown-content absolute top-[100%] min-w-[200px] origin-top-left z-10" navbar-submenu
-      [submenu]="menu.items">
-    </div>
+        <span>{{ menu.group }}</span>
+      </button>
+      <!-- Dropdown  -->
+      <div [ngClass]="menu.items.length === 0 ? '!hidden' : ''"
+        class="dropdown-content absolute top-[100%] min-w-[200px] origin-top-left z-10" navbar-submenu
+        [submenu]="menu.items">
+      </div>
+    </ng-template>
+
+    <ng-template #linkMenu let-item="item">
+      <button class="mr-2 inline-flex rounded-md px-3 py-2 text-sm font-medium cursor-pointer" [ngClass]="
+      menu.selected || menu.active
+        ? 'bg-primary text-primary-foreground'
+        : 'text-muted-foreground/50 hover:bg-card hover:text-muted-foreground'
+    " [routerLink]="menu.route" routerLinkActive="text-white bg-primary" [routerLinkActiveOptions]="{ exact: true }">
+        <span>{{ menu.group }}</span>
+      </button>
+    </ng-template>
   </div>
 </div>

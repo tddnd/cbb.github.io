@@ -3,6 +3,7 @@ export interface MenuItem {
   separator?: boolean;
   selected?: boolean;
   active?: boolean;
+  route?: string | null;
   items: Array<SubMenuItem>;
 }
 
