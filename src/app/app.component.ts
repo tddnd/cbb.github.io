@@ -11,7 +11,7 @@ import { ThemeService } from './core/services/theme.service';
     NgxSonnerToaster],
 })
 export class AppComponent {
-  title = 'CBB - Project';
+  title = 'CBH - Project';
 
   constructor(public themeService: ThemeService) { }
 }

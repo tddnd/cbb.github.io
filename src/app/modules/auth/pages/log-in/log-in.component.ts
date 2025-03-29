@@ -9,12 +9,21 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css'],
-  imports: [FormsModule, ReactiveFormsModule, RouterLink, AngularSvgIconModule, NgIf, ButtonComponent, NgClass],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    AngularSvgIconModule,
+    NgIf,
+    ButtonComponent,
+    NgClass
+  ],
 })
 export class LogInComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   passwordTextType!: boolean;
+  loadingApi = false;
 
   constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router) { }
 
@@ -39,9 +48,11 @@ export class LogInComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.loadingApi = true;
     const { email, password } = this.form.value;
 
     if (this.form.invalid) {
+      this.loadingApi = false;
       return;
     }
 

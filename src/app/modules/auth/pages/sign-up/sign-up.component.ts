@@ -1,7 +1,7 @@
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { TableFilterService } from 'src/app/modules/uikit/pages/table/services/table-filter.service';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
@@ -10,7 +10,16 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  imports: [FormsModule, RouterLink, AngularSvgIconModule, ButtonComponent, NgFor],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    AngularSvgIconModule,
+    ButtonComponent,
+    NgFor,
+    NgIf,
+    NgClass
+  ],
 })
 export class SignUpComponent implements OnInit {
   genderValue: string = ''
@@ -28,11 +37,43 @@ export class SignUpComponent implements OnInit {
     { id: 7, value: 'b', label: 'B' },
     { id: 8, value: 'a', label: 'A' },
   ]
+  form!: FormGroup
+  submitted = false;
+  passwordTextType!: boolean;
+  loadingApi = false;
   constructor(
     public filterService: TableFilterService,
+    private readonly _formBuilder: FormBuilder,
+    private readonly _router: Router
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.form = this._formBuilder.group({
+      username: ['', [Validators.required, Validators.email]],
+      fullName: ['', Validators.required],
+      nickname: [''],
+      gender: ['', Validators.required],
+      level: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    });
+
+    this.form.get('confirmPassword')?.setValidators([
+      Validators.required,
+      control =>
+        control.value === this.form.get('password')?.value
+          ? null
+          : { mismatch: true }
+    ]);
+  }
+
+  get passwordMismatch() {
+    return this.form.errors?.['mismatch'] && this.form.touched;
+  }
+
+  get f() {
+    return this.form.controls;
+  }
 
   onGenderChange(value: Event) {
     const selectElement = value.target as HTMLSelectElement;
@@ -48,5 +89,22 @@ export class SignUpComponent implements OnInit {
 
   onTypeSignUpChange(value: number) {
     this.typeSignUpValue = value
+  }
+
+  togglePasswordTextType() {
+    this.passwordTextType = !this.passwordTextType;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    this.loadingApi = true;
+    const { email, password } = this.form.value;
+
+    if (this.form.invalid) {
+      this.loadingApi = false;
+      return;
+    }
+
+    this._router.navigate(['/']);
   }
 }

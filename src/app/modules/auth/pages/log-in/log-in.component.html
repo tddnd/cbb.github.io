@@ -59,22 +59,23 @@
   </div>
 
   <div class="mb-2 flex items-center justify-between space-x-3">
-    <div class="flex items-center">
-      <input id="remember-me" name="remember-me" type="checkbox" />
-      <label for="remember-me" class="text-muted-foreground ml-2 block text-sm"> Lưu tài khoản </label>
+    <div class="flex items-center cursor-pointer">
+      <input class="cursor-pointer" id="remember-me" name="remember-me" type="checkbox" />
+      <label for="remember-me" class="text-muted-foreground ml-2 block text-sm select-none cursor-pointer"> Lưu tài
+        khoản </label>
     </div>
 
     <app-button routerLink="/auth/forgot-password" impact="none" tone="primary" shape="rounded" size="small"
-      [disabled]="false">
+      [disabled]="loadingApi">
       Quên mật khẩu
     </app-button>
   </div>
 
   <!-- Submit Button -->
   <div>
-    <app-button full impact="bold" tone="primary" shape="rounded" size="medium" [disabled]="false">
-      Đăng nhập
-      <span class="animate-spin ml-1">
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium" [disabled]="loadingApi">
+      <span *ngIf="!loadingApi">Đăng nhập</span>
+      <span class="animate-spin ml-1" *ngIf="loadingApi">
         <svg-icon src="assets/icons/heroicons/outline/loading.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
       </span>
     </app-button>
@@ -83,7 +84,8 @@
   <!-- Sign-up -->
   <div class="text-muted-foreground flex items-center text-sm">
     Chưa phải là thành viên?
-    <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small" [disabled]="false">
+    <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small"
+      [disabled]="loadingApi">
       Đăng ký
     </app-button>
   </div>

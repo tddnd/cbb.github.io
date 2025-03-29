@@ -1,7 +1,7 @@
-<form class="my-10 space-y-6">
+<form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="text-center">
     <h2 class="text-foreground mb-1 text-3xl font-semibold">Đăng ký<span class="text-primary">!</span></h2>
-    <!-- <p class="text-white text-sm">Let's get started with your 30 day free trial</p> -->
+    <!-- <p class="text-muted-foreground text-sm">Let's get started with your 30 day free trial</p> -->
   </div>
 
   <!-- <div routerLink="/dashboard">
@@ -12,7 +12,7 @@
   </div>
 
   <div class="before:border-muted after:border-muted my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t after:mt-0.5 after:flex-1 after:border-t">
-    <p class="text-white mx-4 mb-0 text-center text-sm">or</p>
+    <p class="text-muted-foreground mx-4 mb-0 text-center text-sm">or</p>
   </div> -->
 
   <div class="grid grid-cols-2 gap-2">
@@ -25,53 +25,102 @@
   </div>
 
   <div class="space-y-3 text-left">
-    <div class="relative">
-      <input type="text" id="email" class="peer block" placeholder=" " />
-      <label for="email"
-        class="bg-background text-white peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
-        Email hoặc SĐT
-      </label>
+
+    <div class="form__group">
+      <div class="relative">
+        <input type="text" id="username" class="peer block"
+          [ngClass]="{ 'is__invalid-input': submitted && f['username'].errors }" placeholder=" "
+          formControlName="username" />
+        <label for="username" [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['username'].errors }"
+          class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
+          Email hoặc SĐT
+        </label>
+      </div>
+      <div *ngIf="submitted && f['username'].errors" class="is__invalid-error">
+        <div *ngIf="f['username'].errors['required']">Không được để trống</div>
+        <div *ngIf="f['username'].errors['email']">Email sai định dạng</div>
+      </div>
     </div>
-    <div class="relative">
-      <input type="text" id="email" class="peer block" placeholder=" " />
-      <label for="email"
-        class="bg-background text-white peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
-        Tên đầy đủ
-      </label>
+
+    <div class="form__group">
+      <div class="relative">
+        <input type="text" id="fullName" class="peer block"
+          [ngClass]="{ 'is__invalid-input': submitted && f['fullName'].errors }" placeholder=" "
+          formControlName="fullName" />
+        <label for="fullName" [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['fullName'].errors }"
+          class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
+          Tên đầy đủ
+        </label>
+      </div>
+      <div *ngIf="submitted && f['fullName'].errors" class="is__invalid-error">
+        <div *ngIf="f['fullName'].errors['required']">Không được để trống</div>
+      </div>
     </div>
+
     <div class="relative">
-      <input type="text" id="email" class="peer block" placeholder=" " />
-      <label for="email"
-        class="bg-background text-white peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
+      <input type="text" id="nickname" class="peer block" placeholder=" " formControlName="nickname" />
+      <label for="nickname"
+        class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
         Biệt danh
       </label>
     </div>
+
     <div class="grid grid-cols-2 gap-2">
-      <div class="relative">
-        <select name="gender" class="text-white p-2" [value]="genderValue" (change)="onGenderChange($event)">
-          <option value="" class="text-white" disabled>Giới tính</option>
-          <option value="1">Nam</option>
-          <option value="0">Nữ</option>
-        </select>
+
+      <div class="form__group">
+        <div class="relative">
+          <select name="gender" [ngClass]="{ 'is__invalid-input': submitted && f['gender'].errors }"
+            class="!text-muted-foreground p-2" [value]="genderValue" (change)="onGenderChange($event)"
+            formControlName="gender">
+            <option value="" disabled>Giới tính</option>
+            <option value="1">Nam</option>
+            <option value="0">Nữ</option>
+          </select>
+          <div *ngIf="submitted && f['gender'].errors" class="is__invalid-error">
+            <div *ngIf="f['gender'].errors['required']">Không được để trống</div>
+          </div>
+        </div>
       </div>
-      <div class="relative">
-        <select name="level" class="text-white p-2" [value]="levelValue" (change)="onLevelChange($event)">
-          <option value="" class="text-white" disabled>Hạng</option>
-          <option *ngFor="let item of levelsArray" value={{item.value}}>{{item.label}}</option>
-        </select>
+
+      <div class="form__group">
+        <div class="relative">
+          <select name="level" [ngClass]="{ 'is__invalid-input': submitted && f['level'].errors }"
+            class="!text-muted-foreground p-2" [value]="levelValue" (change)="onLevelChange($event)"
+            formControlName="level">
+            <option value="" disabled>Hạng</option>
+            <option *ngFor="let item of levelsArray" value={{item.value}}>{{item.label}}</option>
+          </select>
+        </div>
+        <div *ngIf="submitted && f['level'].errors" class="is__invalid-error">
+          <div *ngIf="f['level'].errors['required']">Không được để trống</div>
+        </div>
       </div>
     </div>
-    <div class="relative">
-      <input type="password" id="password" class="peer block" placeholder=" " />
-      <label for="password"
-        class="bg-background text-white peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
-        Mật khẩu
-      </label>
-      <span class="text-white absolute top-2 cursor-pointer ltr:right-3 rtl:left-3">
-        <svg-icon src="assets/icons/heroicons/outline/eye-off.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
-        <svg-icon src="assets/icons/heroicons/outline/eye.svg" [svgClass]="'h-5 w-5 hidden'"> </svg-icon>
-      </span>
+
+    <div class="form__group">
+      <div class="relative">
+        <input [type]="passwordTextType ? 'text' : 'password'" id="password"
+          [ngClass]="{ 'is__invalid-input': submitted && f['password'].errors }" class="peer block" placeholder=" "
+          formControlName="password" />
+        <label for="password" [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['password'].errors }"
+          class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
+          Mật khẩu
+        </label>
+        <span class="text-muted-foreground absolute top-2 cursor-pointer ltr:right-3 rtl:left-3"
+          (click)="togglePasswordTextType()">
+          <svg-icon [src]="
+                  !passwordTextType
+                    ? 'assets/icons/heroicons/outline/eye-off.svg'
+                    : 'assets/icons/heroicons/outline/eye.svg'
+                " [svgClass]="'h-5 w-5'">
+          </svg-icon>
+        </span>
+      </div>
+      <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
+        <div *ngIf="f['password'].errors['required']">Không được để trống</div>
+      </div>
     </div>
+
     <!-- Password Meeter -->
     <!-- <div class="grid grid-cols-4 gap-2">
       <div class="rounded-xs bg-muted h-1"></div>
@@ -79,37 +128,57 @@
       <div class="rounded-xs bg-muted h-1"></div>
       <div class="rounded-xs bg-muted h-1"></div>
     </div>
-    <span class="text-white text-xs">
+    <span class="text-muted-foreground text-xs">
       Use 8 or more characters with a mix of letters, numbers & symbols.
     </span> -->
-    <div class="relative">
-      <input type="password" id="password" class="peer block" placeholder=" " />
-      <label for="password"
-        class="bg-background text-white peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
-        Xác nhận mật khẩu
-      </label>
-      <span class="text-white absolute top-2 cursor-pointer ltr:right-3 rtl:left-3">
-        <svg-icon src="assets/icons/heroicons/outline/eye-off.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
-        <svg-icon src="assets/icons/heroicons/outline/eye.svg" [svgClass]="'h-5 w-5 hidden'"> </svg-icon>
-      </span>
-    </div>
-  </div>
 
+    <div class="form__group">
+      <div class="relative">
+        <input [type]="passwordTextType ? 'text' : 'password'" id="confirmPassword"
+          [ngClass]="{ 'is__invalid-input': submitted && f['confirmPassword'].errors }" class="peer block"
+          placeholder=" " formControlName="confirmPassword" />
+        <label for="confirmPassword"
+          [ngClass]="{ 'peer-focus:text-destructive!': submitted && f['confirmPassword'].errors }"
+          class="bg-background text-muted-foreground peer-focus:text-primary absolute top-2 z-10 origin-[0] -translate-y-4 scale-95 transform px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 ltr:left-1 rtl:right-1">
+          Xác nhận mật khẩu
+        </label>
+        <span class="text-muted-foreground absolute top-2 cursor-pointer ltr:right-3 rtl:left-3"
+          (click)="togglePasswordTextType()">
+          <svg-icon [src]="
+                          !passwordTextType
+                            ? 'assets/icons/heroicons/outline/eye-off.svg'
+                            : 'assets/icons/heroicons/outline/eye.svg'
+                        " [svgClass]="'h-5 w-5'">
+          </svg-icon>
+        </span>
+      </div>
+      <div *ngIf="submitted && f['confirmPassword'].errors" class="is__invalid-error">
+        <div *ngIf="f['confirmPassword'].errors['required']">Không được để trống</div>
+        <div *ngIf="f['confirmPassword'].errors['mismatch']">Không khớp mật khẩu</div>
+      </div>
+    </div>
+
+  </div>
   <!-- <div class="flex items-center justify-between space-x-3">
     <div class="flex items-center gap-1">
       <input id="accept-term" name="accept-term" type="checkbox" />
-      <label for="accept-term" class="text-white ml-2 block text-sm"> I Accept the </label>
+      <label for="accept-term" class="text-muted-foreground ml-2 block text-sm"> I Accept the </label>
       <app-button impact="none" tone="primary" shape="rounded" size="small"> Terms </app-button>
     </div>
   </div> -->
 
   <!-- Submit Button -->
   <div>
-    <app-button full impact="bold" tone="primary" shape="rounded" size="medium">Đăng ký</app-button>
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium" [disabled]="loadingApi">
+      <span *ngIf="!loadingApi">Đăng ký</span>
+      <span class="animate-spin ml-1" *ngIf="loadingApi">
+        <svg-icon src="assets/icons/heroicons/outline/loading.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
+      </span>
+    </app-button>
   </div>
 
   <!-- Sign-up -->
-  <div class="text-white flex items-center text-sm">
+  <div class="text-muted-foreground flex items-center text-sm">
     Đã có tài khoản?
     <app-button routerLink="/auth/login-in" impact="none" tone="primary" shape="rounded" size="small">
       Đăng nhập
